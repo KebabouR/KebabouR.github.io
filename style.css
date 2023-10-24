@@ -91,12 +91,17 @@ body {
     transform: scale(1.1);
 }
 
-
-.logohd {
+.headerlogo {
     display: flex;
     justify-content: center; /* Center the content horizontally */
     align-items: flex-start; /* Align the content at the top vertically */
     height: 100vh; /* Make the header take the full viewport height */
-    background-color: linear-gradient(to bottom right, rgba(128, 0, 128, 0.5) , rgba(0, 0, 255, 0.5));
+    -webkit-text-fill-color: white;
+    background-color: linear-gradient(to bottom right, rgba(128, 0, 128, 0.5) , rgba(0, 0, 255, 0.5)); /* Set your desired background color */
     /* Add any other styles you want for the header */
+}
+
+
+.logo {
+    font-size: 100px;
 }
