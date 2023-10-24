@@ -90,3 +90,13 @@ body {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+
+.logohd {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: flex-start; /* Align the content at the top vertically */
+    height: 100vh; /* Make the header take the full viewport height */
+    background-color: linear-gradient(to bottom right, rgba(128, 0, 128, 0.5) , rgba(0, 0, 255, 0.5));
+    /* Add any other styles you want for the header */
+}
