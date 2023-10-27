@@ -33,7 +33,7 @@
     $.getJSON('https://api.leaked.wiki/discorduser?id=732928671282888784',
     function(data) {
         document.getElementById("avatar").src = data.avatar;
-        document.getElementById("username").innerHTML = data.username + "#" + data.discriminator
+        document.getElementById("username").innerHTML = data.username
     }
     )
 </script>
