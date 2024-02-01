@@ -14,7 +14,7 @@ async function uploadSong() {
         formData.append('file', file);
 
         try {
-            const response = await fetch('https://your-vercel-app-url/api/songs', {
+            const response = await fetch('https://kebabou-r-github-io.vercel.app/api/songs', {
                 method: 'POST',
                 body: formData,
             });
