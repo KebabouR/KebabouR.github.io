@@ -1,31 +1,42 @@
-// frontend/script.js
+// serverless/api/songs.js
 
-async function uploadSong() {
-    const title = document.getElementById('title').value;
-    const artist = document.getElementById('artist').value;
-    const fileInput = document.getElementById('file');
+const { MongoClient } = require('mongodb');
 
-    if (title && artist && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
+async function handler(req, res) {
+    const connection_string = process.env.MONGODB_URI; // Use the environment variable
 
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('artist', artist);
-        formData.append('file', file);
+    try {
+        const client = new MongoClient(connection_string, { useNewUrlParser: true, useUnifiedTopology: true });
+        await client.connect();
 
-        try {
-            const response = await fetch('https://kebabou-r-github-io.vercel.app/api/songs', {
-                method: 'POST',
-                body: formData,
-            });
+        const db = client.db('music_player');
+        const collection = db.collection('songs');
 
-            if (response.ok) {
-                alert('Song uploaded successfully!');
+        if (req.method === 'GET') {
+            // Retrieve songs
+            const songs = await collection.find().toArray();
+            res.status(200).json({ songs });
+        } else if (req.method === 'POST') {
+            // Upload a new song
+            const { title, artist } = req.body;
+            const file = req.files.file;
+
+            // Save the file to your storage system (e.g., AWS S3, Azure Blob Storage, etc.)
+            // Then, save the song information to MongoDB
+            const result = await collection.insertOne({ title, artist, fileUrl: 'your_file_url' });
+
+            if (result.insertedCount === 1) {
+                res.status(200).json({ success: true });
             } else {
-                alert('Failed to upload song');
+                res.status(500).json({ success: false, error: 'Failed to upload song' });
             }
-        } catch (error) {
-            console.error('Error uploading song:', error);
         }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    } finally {
+        client.close();
     }
 }
+
+module.exports = handler;
